@@ -1,0 +1,135 @@
+## 一、系统需要设计的所有功能如下:<br>
+1、商品分类管理<br>
+2、商品管理<br>
+3、开库存赠送单<br>
+4、库存盘点<br>
+5、库存核对<br>
+6、库存查看<br>
+7、开库存报警单<br>
+8、单据审批<br>
+9、制定促销策略<br>
+10、查看系统操作日志<br>
+11、客户管理<br>
+12、制定进货单<br>
+13、制定进货退货单<br>
+14、制定销售单<br>
+15、制定销售退货单<br>
+16、账户管理<br>
+17、制定单据<br>
+  17.1、指定收款单<br>
+  17.2、制定付款单<br>
+  17.3、制定现金费用单<br>
+18、查看销售明细表<br>
+19、查看经营历程表<br>
+20、查看经营情况表<br>
+21、期初建账<br>
+## 二、合并相关功能<br>
+
+商品分类管理、商品管理、库存盘点、库存核对、库存查看、入库和出库 -> 库存<br>
+销售和退货->销售<br>
+进货和进货退货->进货部分<br>
+账户管理、制定单据、查看销售明细表、查看经营历程表、查看经营情况表、期初建账->财务<br>
+
+所以系统主要功能有 库存，销售，进货，财务，审批单据， 销售策略， 用户管理,客户管理<br>
+
+## 三、主要功能设计表
+
+| 功能   | 对应逻辑包                                 |
+| ---- | ------------------------------------- |
+| 库存   | commodityui,commoditybl,commoditydata |
+| 销售   | saleui,salebl,saledata                |
+| 进货   | importui,importbl.importdata          |
+| 财务   | financeui,financebl,financedata       |
+| 单据审批 | checkui,checkbl,checkdata             |
+| 销售策略 | promotionui,promotionbl,promotiondata |
+| 用户管理 | uerui,userbl,userdata                 |
+| 客户管理 | customerui,customerbl,customerdata    |
+
+## 四、功能依赖分析
+
+库存管理过程中，在确认操作和查询的时候，需要得知销售信息，进货信息，单据审批，销售策略，用户管理<br>
+销售过程中，要使用销售策略，得知商品信息，调整商品库存，使用客户信息，使用用户的信息，单据审批，通知财务<br>
+进货过程中，要使用商品信息，调整商品库存，单据审批，通知财务，用户管理，客户管理<br>
+财务，要使用销售信息，进货信息，单据审批，用户管理<br>
+单据审批，无需要依赖其他
+销售策略，依赖查看库存商品信息（数量，编码，价格）<br>
+用户管理，无需依赖其他<br>
+客户管理，依赖销售，进货<br>
+
+## 五、改进概要功能设计
+
+| 功能   | 对应逻辑包                                    |
+| ---- | ---------------------------------------- |
+| 库存   | commodityui,commoditybl,commoditydata<br>salebl,saledata<br>importbl.importdata<br>checkbl,checkdata<br>promotionbl,promotiondata<br>userbl,userdata |
+| 销售   | saleui,salebl,saledata<br>promotionbl,promotiondata<br>commoditybl,commoditydata<br>customerbl,customerdata<br>userbl,userdata<br>financebl,financedata<br>checkbl,checkdata |
+| 进货   | importui,importbl.importdata<br>commoditybl,commoditydata<br>checkbl,checkdata<br>financebl,financedata<br>customerbl,customerdata |
+| 财务   | financeui,financebl,financedata<br>salebl,saledata<br>importbl.importdata<br>,checkbl,checkdata<br>userbl,userdata |
+| 单据审批 | checkui,checkbl,checkdata<br>            |
+| 销售策略 | promotionui,promotionbl,promotiondata    |
+| 用户管理 | uerui,userbl,userdata                    |
+| 客户管理 | customerui,customerbl,customerdata<br>salebl,saledata<br>importbl.importdata |
+
+
+
+## 六、使用非功能性需求与项目约束评价和改进初始设计
+
+1.账号类型要求安全，对账号采用登录权限控制逻辑。<br>
+2.
+
+## 七、最终开发包设计
+
+| 开发（物理）包              | 依赖的其他开发包 |
+| -------------------- | -------- |
+| mainui               |          |
+| saleui               |          |
+| saleblservice        |          |
+| salebl               |          |
+| saledataservice      |          |
+| saledata             |          |
+| commodityui          |          |
+| commodityblservice   |          |
+| commoditybl          |          |
+| commoditydataservice |          |
+| commoditydata        |          |
+| importui             |          |
+| importblservice      |          |
+| importbl             |          |
+| importdataservice    |          |
+| importdata           |          |
+| financeui            |          |
+| financeblservice     |          |
+| financebl            |          |
+| financedataservice   |          |
+| financedata          |          |
+| checkui              |          |
+| checkblservice       |          |
+| checkbl              |          |
+| checkdataservice     |          |
+| checkdata            |          |
+| promotionui          |          |
+| promotionblservice   |          |
+| promotionbl          |          |
+| promotiondataservice |          |
+| promotiondata        |          |
+| userui               |          |
+| userblservice        |          |
+| userbl               |          |
+| userdataservice      |          |
+| userdata             |          |
+| customerui           |          |
+| customerblservice    |          |
+| customerbl           |          |
+| customerdataservice  |          |
+| vo                   |          |
+| po                   |          |
+| utilitybl            |          |
+| 界面类库包                |          |
+| java net             |          |
+| databaseutility      |          |
+
+## 八、开发包图
+
+![](img/开发包图.png)
+
+
+
